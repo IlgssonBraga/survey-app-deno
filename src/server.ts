@@ -15,7 +15,10 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 app.addEventListener("listen", ({ hostname, port, secure }) => {
-  console.log(`Server running on http://${hostname || "localhost"}:${port}`);
+  console.log(
+    `Server running on ${secure ? "https" : "http"}://${hostname ||
+      "localhost"}:${port}`,
+  );
 });
 
 await app.listen({ port: 3333 });
