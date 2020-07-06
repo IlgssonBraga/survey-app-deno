@@ -9,8 +9,6 @@ import {
 } from "../../../deps.ts";
 import User from "../models/User.ts";
 
-const key = "your-secret";
-
 const header: Jose = {
   alg: "HS256",
   typ: "JWT",
@@ -45,7 +43,9 @@ class AuthController {
       exp: setExpiration(new Date().getTime() + 60 * 60 * 1000),
     };
 
-    const jwt = makeJwt({ key, header, payload });
+    const jwt = makeJwt(
+      { key: Deno.env.get("JWT_SECRET_KEY")!, header, payload },
+    );
 
     ctx.response.body = {
       id: user.id,

@@ -18,3 +18,5 @@ export {
   Jose,
   Payload,
 } from "https://deno.land/x/djwt@v0.9.0/create.ts";
+
+import { config } from "https://deno.land/x/dotenv@v0.5.0/mod.ts";
