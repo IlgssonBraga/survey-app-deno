@@ -1,18 +1,13 @@
 import {
   Application,
-  Router,
-  RouterContext,
 } from "../deps.ts";
 
+import routes from "./routes.ts";
+
 const app = new Application();
-const router = new Router();
 
-router.get("/", (ctx: RouterContext) => {
-  ctx.response.body = "Hello, world";
-});
-
-app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(routes.routes());
+app.use(routes.allowedMethods());
 
 app.addEventListener("listen", ({ hostname, port, secure }) => {
   console.log(
