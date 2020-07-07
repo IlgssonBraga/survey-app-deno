@@ -35,6 +35,10 @@ export default class Survey extends BaseModel {
     return this;
   }
 
+  delete() {
+    return surveysCollection.deleteOne({ _id: { $oid: this.id } });
+  }
+
   static async findById(id: string): Promise<Survey | null> {
     const survey = await surveysCollection.findOne({ _id: { $oid: id } });
     if (!survey) {

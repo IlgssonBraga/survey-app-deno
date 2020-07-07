@@ -39,7 +39,14 @@ class SurveyController extends BaseSurveyController {
     }
   }
 
-  async delete(ctx: RouterContext) {}
+  async delete(ctx: RouterContext) {
+    const id = ctx.params.id!;
+    const survey = await this.findSurveyOrFail(id, ctx);
+    if (survey) {
+      await survey.delete();
+      ctx.response.status = 204;
+    }
+  }
 }
 
 export default new SurveyController();
