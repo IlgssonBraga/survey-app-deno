@@ -12,14 +12,23 @@ routes.post("/api/login", AuthController.login);
 
 routes.post("/api/register", AuthController.register);
 
-routes.get("/api/survey", SurveyController.getAllForUser);
+routes.get(
+  "/api/survey",
+  SurveyController.getAllForUser.bind(SurveyController),
+);
 
-routes.get("/api/survey/:id", SurveyController.getSingle);
+routes.get(
+  "/api/survey/:id",
+  SurveyController.getSingle.bind(SurveyController),
+);
 
-routes.post("/api/survey", SurveyController.create);
+routes.post("/api/survey", SurveyController.create.bind(SurveyController));
 
-routes.put("/api/survey/:id", SurveyController.update);
+routes.put("/api/survey/:id", SurveyController.update.bind(SurveyController));
 
-routes.delete("/api/survey/:id", SurveyController.delete);
+routes.delete(
+  "/api/survey/:id",
+  SurveyController.delete.bind(SurveyController),
+);
 
 export default routes;

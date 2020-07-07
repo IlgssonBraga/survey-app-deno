@@ -24,6 +24,17 @@ export default class Survey extends BaseModel {
     return this;
   }
 
+  async update({ name, description }: { name: string; description: string }) {
+    await surveysCollection.updateOne(
+      { _id: { $oid: this.id } },
+      { name, description },
+    );
+
+    this.name = name;
+    this.description = description;
+    return this;
+  }
+
   static async findById(id: string): Promise<Survey | null> {
     const survey = await surveysCollection.findOne({ _id: { $oid: id } });
     if (!survey) {

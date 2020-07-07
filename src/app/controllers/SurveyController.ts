@@ -1,24 +1,20 @@
 import { RouterContext } from "../../../deps.ts";
 import Survey from "../models/Servey.ts";
+import BaseSurveyController from "./BaseSurveyController.ts";
 
-class SurveyController {
+class SurveyController extends BaseSurveyController {
   async getAllForUser(ctx: RouterContext) {
     const surveys = await Survey.findByUser("1");
-    console.log(surveys);
     ctx.response.body = surveys;
   }
 
   async getSingle(ctx: RouterContext) {
     const id = ctx.params.id!;
-    const survey = await Survey.findById(id);
+    const survey: Survey | null = await this.findSurveyOrFail(id, ctx);
 
-    if (!survey) {
-      ctx.response.status = 404;
-      ctx.response.body = { message: "Survey not found" };
-      return;
+    if (survey) {
+      ctx.response.body = survey;
     }
-
-    ctx.response.body = survey;
   }
 
   async create(ctx: RouterContext) {
@@ -32,7 +28,16 @@ class SurveyController {
     ctx.response.body = survey;
   }
 
-  async update(ctx: RouterContext) {}
+  async update(ctx: RouterContext) {
+    const id = ctx.params.id!;
+    const { value: { name, description } } = await ctx.request.body();
+    const survey = await this.findSurveyOrFail(id, ctx);
+
+    if (survey) {
+      await survey.update({ name, description });
+      ctx.response.body = survey;
+    }
+  }
 
   async delete(ctx: RouterContext) {}
 }
