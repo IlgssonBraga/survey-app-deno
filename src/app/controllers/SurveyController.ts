@@ -8,7 +8,18 @@ class SurveyController {
     ctx.response.body = surveys;
   }
 
-  async getSingle(ctx: RouterContext) {}
+  async getSingle(ctx: RouterContext) {
+    const id = ctx.params.id!;
+    const survey = await Survey.findById(id);
+
+    if (!survey) {
+      ctx.response.status = 404;
+      ctx.response.body = { message: "Survey not found" };
+      return;
+    }
+
+    ctx.response.body = survey;
+  }
 
   async create(ctx: RouterContext) {
     const { value: { name, description } } = await ctx.request.body();

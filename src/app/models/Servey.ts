@@ -24,6 +24,14 @@ export default class Survey extends BaseModel {
     return this;
   }
 
+  static async findById(id: string): Promise<Survey | null> {
+    const survey = await surveysCollection.findOne({ _id: { $oid: id } });
+    if (!survey) {
+      return null;
+    }
+    return Survey.prepare(survey);
+  }
+
   protected static prepare(data: any): Survey {
     data = BaseModel.prepare(data);
     const survey = new Survey(data.userId, data.name, data.description);
