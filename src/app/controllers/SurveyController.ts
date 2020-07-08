@@ -18,7 +18,9 @@ class SurveyController extends BaseSurveyController {
   }
 
   async create(ctx: RouterContext) {
-    const { value: { name, description } } = await ctx.request.body();
+    const {
+      value: { name, description },
+    } = await ctx.request.body();
 
     const survey = new Survey("1", name, description);
 
@@ -30,7 +32,9 @@ class SurveyController extends BaseSurveyController {
 
   async update(ctx: RouterContext) {
     const id = ctx.params.id!;
-    const { value: { name, description } } = await ctx.request.body();
+    const {
+      value: { name, description },
+    } = await ctx.request.body();
     const survey = await this.findSurveyOrFail(id, ctx);
 
     if (survey) {
