@@ -27,7 +27,7 @@ export default class Survey extends BaseModel {
   async update({ name, description }: { name: string; description: string }) {
     await surveysCollection.updateOne(
       { _id: { $oid: this.id } },
-      { name, description },
+      { $set: { name, description } },
     );
 
     this.name = name;

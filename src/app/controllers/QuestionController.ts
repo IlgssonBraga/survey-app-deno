@@ -14,6 +14,17 @@ class QuestionController extends BaseSurveyController {
   }
 
   async getSingle(ctx: RouterContext) {
+    const id = ctx.params.id!;
+
+    const question = await Question.findById(id);
+
+    if (!question) {
+      ctx.response.status = 404;
+      ctx.response.body = { message: "Invalid question" };
+      return;
+    }
+
+    ctx.response.body = question;
   }
 
   async create(ctx: RouterContext) {
@@ -52,6 +63,17 @@ class QuestionController extends BaseSurveyController {
   }
 
   async delete(ctx: RouterContext) {
+    const id = ctx.params.id!;
+
+    const question = await Question.findById(id);
+
+    if (!question) {
+      ctx.response.status = 404;
+      ctx.response.body = { message: "Invalid question" };
+      return;
+    }
+    await question.delete();
+    ctx.response.status = 204;
   }
 }
 
