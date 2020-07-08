@@ -1,6 +1,7 @@
 import { questionsCollection } from "../../config/mongo.ts";
+import BaseModel from "./BaseModel.ts";
 
-export default class Question {
+export default class Question extends BaseModel {
   public id: string = "";
   constructor(
     public surveyId: string,
@@ -8,7 +9,9 @@ export default class Question {
     public type: QuestionType,
     public required: boolean,
     public data: any,
-  ) {}
+  ) {
+    super();
+  }
 
   static async findBySurvey(surveyId: string): Promise<Question[]> {
     const questions = await questionsCollection.find({ surveyId });
@@ -45,6 +48,19 @@ export default class Question {
 
   delete() {
     return questionsCollection.deleteOne({ _id: { $oid: this.id } });
+  }
+
+  protected static prepare(data: any): Question {
+    data = BaseModel.prepare(data);
+    const question = new Question(
+      data.surveyId,
+      data.text,
+      data.type,
+      data.required,
+      data.data,
+    );
+    question.id = data.id;
+    return question;
   }
 }
 
