@@ -1,6 +1,7 @@
 import { Router, RouterContext } from "../deps.ts";
 import AuthController from "./app/controllers/AuthController.ts";
 import SurveyController from "./app/controllers/SurveyController.ts";
+import QuestionController from "./app/controllers/QuestionController.ts";
 import { authMiddleware } from "./app/middlewares/authMiddleware.ts";
 
 const routes = new Router();
@@ -41,6 +42,38 @@ routes.delete(
   "/api/survey/:id",
   authMiddleware,
   SurveyController.delete.bind(SurveyController),
+);
+
+// questions
+
+routes.get(
+  "/api/survey/:surveyId/questions",
+  authMiddleware,
+  QuestionController.getBySurvey.bind(QuestionController),
+);
+
+routes.get(
+  "/api/question/:id",
+  authMiddleware,
+  QuestionController.getSingle.bind(QuestionController),
+);
+
+routes.post(
+  "/api/question/:surveyId",
+  authMiddleware,
+  QuestionController.create.bind(QuestionController),
+);
+
+routes.put(
+  "/api/question/:id",
+  authMiddleware,
+  QuestionController.update.bind(QuestionController),
+);
+
+routes.delete(
+  "/api/question/:id",
+  authMiddleware,
+  QuestionController.delete.bind(QuestionController),
 );
 
 export default routes;
