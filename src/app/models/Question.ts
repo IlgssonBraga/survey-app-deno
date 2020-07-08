@@ -36,7 +36,9 @@ export default class Question extends BaseModel {
   async update(text: string, type: QuestionType, required: boolean, data: any) {
     await questionsCollection.updateOne(
       { _id: { $oid: this.id } },
-      { text, type, required, data },
+      {
+        $set: { text, type, required, data },
+      },
     );
 
     this.text = text;
