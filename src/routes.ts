@@ -3,12 +3,13 @@ import AuthController from "./app/controllers/AuthController.ts";
 import SurveyController from "./app/controllers/SurveyController.ts";
 import QuestionController from "./app/controllers/QuestionController.ts";
 import { authMiddleware } from "./app/middlewares/authMiddleware.ts";
+import SiteController from "./app/controllers/SiteController.ts";
 
 const routes = new Router();
 
-routes.get("/", (ctx: RouterContext) => {
-  ctx.response.body = "Hello, world";
-});
+routes.get("/", SiteController.surveys);
+
+routes.get("/survey:id", SiteController.viewSurvey);
 
 routes.post("/api/login", AuthController.login);
 
