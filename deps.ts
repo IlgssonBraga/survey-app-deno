@@ -20,3 +20,5 @@ export {
 } from "https://deno.land/x/djwt@v0.9.0/create.ts";
 
 import { config } from "https://deno.land/x/dotenv@v0.5.0/mod.ts";
+
+export { renderFileToString } from "https://deno.land/x/dejs@0.7.0/mod.ts";
