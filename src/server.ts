@@ -3,11 +3,13 @@ import {
 } from "../deps.ts";
 
 import routes from "./routes.ts";
+import { staticFilesMiddleware } from "./app/middlewares/staticFilesMiddleware.ts";
 
 const app = new Application();
 
 app.use(routes.routes());
 app.use(routes.allowedMethods());
+app.use(staticFilesMiddleware);
 
 app.addEventListener("listen", ({ hostname, port, secure }) => {
   console.log(
