@@ -17,6 +17,11 @@ export default class Survey extends BaseModel {
     return surveys.map((survey: any) => Survey.prepare(survey));
   }
 
+  static async findAll(): Promise<Survey[]> {
+    const surveys = await surveysCollection.find();
+    return surveys.map((survey: any) => Survey.prepare(survey));
+  }
+
   async create() {
     delete this.id;
     const { $oid } = await surveysCollection.insertOne(this);

@@ -1,4 +1,4 @@
-import { Router, RouterContext } from "../deps.ts";
+import { Router } from "../deps.ts";
 import AuthController from "./app/controllers/AuthController.ts";
 import SurveyController from "./app/controllers/SurveyController.ts";
 import QuestionController from "./app/controllers/QuestionController.ts";
